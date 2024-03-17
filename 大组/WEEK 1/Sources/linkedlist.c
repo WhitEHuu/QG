@@ -131,6 +131,37 @@ bool hasCycle(ListNode* head) {
     return true; //当快慢指针重叠时，即可证明该链表已成环
 }
 
+//非递归方法反转链表
+ListNode* reverseList_1(ListNode* head) {
+    ListNode* prev = NULL; //用来保存当前节点的前一个节点
+    ListNode* current = head; //用来保存当前节点
+    ListNode* next = NULL; //用来保存当前节点的下一个节点
+    while (current != NULL) {
+        next = current->next;  //保存当前节点的下一个节点
+        current->next = prev;  //当前节点指向上一个节点，实现反转
+        prev = current;  //prev指针移动到当前节点
+        current = next;  //current指针移向下一个节点
+    }
+    return prev; //返回反转后的链表头节点
+}
+
+//递归方法反转链表
+ListNode* reverseList_2(ListNode* head){
+    if (head == NULL || head->next == NULL) { //先判断该链表是否为空或者只有一个节点
+        return head; //若满足上述条件，则直接返回head
+    }
+    ListNode* newHead = reverseList_2(head->next); 
+    /*调用递归函数,将以head->为头节点的子链表进行反转
+    并将反转后的新头节点保存在newHead中*/
+    head->next->next = head;
+    head->next = NULL;
+    /*将 head->next->next 指向 head
+    实现了当前节点和下一个节点的指针方向反转
+    并将 head->next 置为 NULL，断开原来的连接，以防止出现环*/
+    return newHead;
+    //返回newHead,即反转后的链表的头节点
+}
+
 int main() {
     ListNode* head = NULL;
 
@@ -173,6 +204,18 @@ int main() {
     deleteNode(&head, 3);
 
     printf("List after deleting node with key 3: ");
+    printList(head);
+
+    //利用非递归方法反转链表
+    head = reverseList_1(head);
+    
+    printf("The first time Reversed list: ");
+    printList(head);
+
+    //利用递归方法反转链表
+    head = reverseList_2(head);
+    
+    printf("The second time Reversed list: ");
     printList(head);
 
     // 释放链表内存
