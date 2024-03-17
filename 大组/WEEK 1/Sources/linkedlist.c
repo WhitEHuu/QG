@@ -78,6 +78,59 @@ void freeList(ListNode** head) {
     *head = NULL;  //将头指针设置为NULL
 }
 
+//链表中的奇偶互换位置
+ListNode* rearrangeOddEven(ListNode* head) {
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+
+    ListNode* odd = head;
+    ListNode* even = head->next;
+    ListNode* evenHead = even;
+
+    while (even != NULL && even->next != NULL) {
+        odd->next = even->next;
+        odd = odd->next;
+        even->next = odd->next;
+        even = even->next;
+    }
+
+    odd->next = evenHead;
+
+    return head;
+}
+
+//寻找链表中点
+ListNode* findMiddle(ListNode* head){
+    if (head==NULL){
+        return NULL;
+    }
+    ListNode* slow=head;
+    ListNode* fast=head;
+    while(fast!=NULL && fast->next!=NULL){  //快指针没走到最后一个或者倒数第二个
+        slow=slow->next;  //慢指针走一个节点
+        fast=fast->next->next;  //快指针走两个节点
+    }
+    return slow; //当快指针走完链表或者走到倒数第二个的时候，慢指针即为链表中点
+}
+
+//判断链表是否成环
+bool hasCycle(ListNode* head) {
+    if (head == NULL || head->next == NULL) {  //判断链表节点大于等于两个，否则不会成环
+        return false;
+    }
+    ListNode* slow = head;   //慢指针从头部节点开始走
+    ListNode* fast = head->next;   //快指针从第二个节点开始走
+    while (fast != slow) {  //判断快慢指针是否重叠
+        if (fast == NULL || fast->next == NULL) {  //判断快指针是否走到链表尾部
+            return false;  //若走到链表尾部则该链表一定不成环
+        }
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return true; //当快慢指针重叠时，即可证明该链表已成环
+}
+
 int main() {
     ListNode* head = NULL;
 
@@ -96,6 +149,26 @@ int main() {
     printf("List after insertions at end: ");
     printList(head);
 
+    //奇数偶数互换
+    rearrangeOddEven(head);
+    printf("List after rerangeOddEven: ");
+    printList(head);
+
+    //寻找链表重点
+    ListNode* middle = findMiddle(head);
+    if (middle != NULL) {
+        printf("Middle element of the list is: %d\n", middle->data);
+    } else {
+        printf("List is empty\n");
+    }
+
+    //判断链表是否成环
+    if (hasCycle(head)) {
+        printf("The linked list has a cycle.\n");
+    } else {
+        printf("The linked list does not have a cycle.\n");
+    }
+    
     // 删除节点
     deleteNode(&head, 3);
 
