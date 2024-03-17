@@ -37,4 +37,10 @@ ListNode* findMiddle(ListNode* head);
 //判断链表是否成环
 bool hasCycle(ListNode* head);
 
+//非递归方法反转链表
+ListNode* reverseList_1(ListNode* head);
+
+//递归方法反转链表
+ListNode* reverseList_2(ListNode* head);
+
 #endif
