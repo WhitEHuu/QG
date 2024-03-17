@@ -28,4 +28,13 @@ void printList(ListNode* head);
 //释放单向链表内存
 void freeList(ListNode** head);
 
+//交换链表的奇偶项
+ListNode* rearrangeOddEven(ListNode* head);
+
+//寻找链表的中点
+ListNode* findMiddle(ListNode* head);
+
+//判断链表是否成环
+bool hasCycle(ListNode* head);
+
 #endif
