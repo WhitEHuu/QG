@@ -62,5 +62,8 @@ int main() {
 
     freeDoublyList(head);
 
+    system("pause");
+    
     return 0;
+
 }
