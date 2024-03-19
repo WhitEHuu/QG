@@ -221,5 +221,7 @@ int main() {
     // 释放链表内存
     freeList(&head);
 
+    system("pause");
+    
     return 0;
 }
